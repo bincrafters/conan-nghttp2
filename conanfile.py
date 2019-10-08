@@ -39,9 +39,9 @@ class Nghttp2Conan(ConanFile):
             raise ConanInvalidConfiguration("Build with asio and MSVC is not supported yet, see upstream bug #589")
 
     def requirements(self):
-        self.requires.add("zlib/1.2.11@conan/stable")
+        self.requires.add("zlib/1.2.11")
         if self.options.with_app:
-            self.requires.add("OpenSSL/1.0.2r@conan/stable")
+            self.requires.add("openssl/1.0.2t")
             self.requires.add("c-ares/1.15.0@conan/stable")
             self.requires.add("libev/4.25@bincrafters/stable")
             self.requires.add("libxml2/2.9.9@bincrafters/stable")
@@ -78,7 +78,7 @@ class Nghttp2Conan(ConanFile):
         cmake.definitions["ENABLE_ASIO_LIB"] = "ON" if self.options.with_asio else "OFF"
 
         if self.options.with_app:
-            cmake.definitions['OPENSSL_ROOT_DIR'] = self.deps_cpp_info['OpenSSL'].rootpath
+            cmake.definitions['OPENSSL_ROOT_DIR'] = self.deps_cpp_info['openssl'].rootpath
         if self.options.with_asio:
             cmake.definitions['BOOST_ROOT'] = self.deps_cpp_info['boost'].rootpath
         cmake.definitions['ZLIB_ROOT'] = self.deps_cpp_info['zlib'].rootpath
